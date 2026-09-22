@@ -1,5 +1,9 @@
 # CatalogoProdutos
 
+Lista os produtos da API, permitindo navegar pelas categorias disponíveis. Ao selecionar
+uma categoria, exibe apenas os produtos correspondentes. Formulário simples para marcar
+o produto como "Tenho interesse" e adicionar uma observação
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
 
 ## Development server
