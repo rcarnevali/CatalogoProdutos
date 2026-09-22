@@ -1,33 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Produto } from '../models/produto.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class ProdutosService {
-  private readonly apiUrl = 'http://localhost:5027/api/produtos';
+export class ListaService {
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  listarTodos(): Observable<Produto[]> {
-    return this.http.get<Produto[]>(this.apiUrl);
+  itens = [
+    { nome: 'Arroz', quantidade: 5, comprado: false },
+    { nome: 'Feijão', quantidade: 3, comprado: false },
+    { nome: 'Macarrão', quantidade: 2, comprado: false }
+  ]
+
+  marcarComprado(item: any)
+  {
+    item.comprado = !item.comprado
   }
 
-  buscarPorId(id: number): Observable<Produto> {
-    return this.http.get<Produto>(`${this.apiUrl}/${id}`);
+  adicionarItem(nome: string, quantidade: number) {
+    this.itens.push({ nome, quantidade, comprado: false });
   }
 
-  criar(produto: Omit<Produto, 'id'>): Observable<Produto> {
-    return this.http.post<Produto>(this.apiUrl, produto);
+  buscarSugestoes() {
+    return this.http.get<any[]>(`https://fakestoreapi.com/products`);
   }
 
-  atualizar(id: number, produto: Omit<Produto, 'id'>): Observable<string> {
-    return this.http.put(`${this.apiUrl}/${id}`, produto, { responseType: 'text' });
-  }
-
-  remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  buscarProdutoPorId(id: number) {
+    return this.http.get<any>(`https://fakestoreapi.com/products/${id}`);
   }
 }
