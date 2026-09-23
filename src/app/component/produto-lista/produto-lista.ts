@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ListaService } from '../../service/lista.service';
 import { RouterLink } from '@angular/router';
+import { Produto } from '../../services/produto';
 
 @Component({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './produto-lista.html',
 })
 export class ProdutoLista implements OnInit {
-  constructor(private listaService: ListaService) { }
+  constructor(private listaService: Produto) { }
 
   sugestoes: any[] = [];
 
