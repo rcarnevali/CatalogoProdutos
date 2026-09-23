@@ -1,8 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Produto } from './models/produto.model';
-import { ProdutosService } from './services/produtos.service';
+import { Produto, ProdutoService } from './services/produto';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +24,7 @@ export class App implements OnInit {
   buscandoId = signal(false);
   erroBusca = signal('');
 
-  constructor(private readonly produtosService: ProdutosService) {}
+  constructor(private readonly produtosService: ProdutoService) {}
 
   ngOnInit(): void {
     this.carregarProdutos();
@@ -36,7 +35,7 @@ export class App implements OnInit {
     this.erro.set('');
 
     this.produtosService.listarTodos().subscribe({
-      next: (produtos) => {
+      next: (produtos: any) => {
         this.produtos.set(produtos);
         this.carregando.set(false);
       },
