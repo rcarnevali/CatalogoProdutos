@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ListaService } from '../../services/lista.service';
+import { ListaService } from '../../service/lista.service';
 
 @Component({
   imports: [CommonModule, RouterLink],

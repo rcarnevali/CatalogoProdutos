@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ListaService } from '../../services/lista.service';
+import { ListaService } from '../../service/lista.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProdutoLista implements OnInit {
 
   ngOnInit(): void {
     this.listaService.buscarSugestoes().subscribe({
-      next: (data) => this.sugestoes = data,
+      next: (data: any[]) => this.sugestoes = data,
       error: (error) => console.error('Deu ruim:', error),
     });
   }
