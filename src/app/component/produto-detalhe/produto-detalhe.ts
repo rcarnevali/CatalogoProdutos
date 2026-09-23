@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ListaService } from '../../service/lista.service';
+import { ActivatedRoute, RouterLink } from '@angular/router';  
+import { Produto } from '../../services/produto';
 
 @Component({
   imports: [CommonModule, RouterLink],
@@ -15,7 +15,7 @@ produto: any = null;
 
   constructor(
     private route: ActivatedRoute,
-    private listaService: ListaService
+    private listaService: Produto
   )   {  }
 
   ngOnInit(): void {

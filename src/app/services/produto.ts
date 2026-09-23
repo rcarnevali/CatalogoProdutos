@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ListaService {
 
-  constructor(private http: HttpClient) { }
+export class Produto {
+constructor(private http: HttpClient) { }
 
   itens = [
     { nome: 'Arroz', quantidade: 5, comprado: false },
