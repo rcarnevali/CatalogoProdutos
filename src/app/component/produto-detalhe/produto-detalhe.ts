@@ -1,21 +1,20 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';  
-import { Produto } from '../../services/produto';
+import { Component } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ProdutoService } from '../../services/produto';
 
 @Component({
-  imports: [CommonModule, RouterLink],
   selector: 'app-produto-detalhe',
-  styleUrl: './produto-detalhe.css',
+  imports: [CommonModule, RouterLink],
   templateUrl: './produto-detalhe.html',
+  styleUrl: './produto-detalhe.css'
 })
 export class ProdutoDetalhe {
-
-produto: any = null;
+  produto: any = null;
 
   constructor(
     private route: ActivatedRoute,
-    private listaService: Produto
+    private listaService: ProdutoService
   )   {  }
 
   ngOnInit(): void {

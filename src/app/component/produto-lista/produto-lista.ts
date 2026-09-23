@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ProdutoService } from '../../services/produto';
 import { RouterLink } from '@angular/router';
-import { Produto } from '../../services/produto';
 
 @Component({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   selector: 'app-produto-lista',
-  styleUrl: './produto-lista.css',
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './produto-lista.html',
+  styleUrl: './produto-lista.css'
 })
 export class ProdutoLista implements OnInit {
-  constructor(private listaService: Produto) { }
+  constructor(public listaService: ProdutoService) { }
 
   sugestoes: any[] = [];
 
@@ -22,7 +22,7 @@ export class ProdutoLista implements OnInit {
 
   ngOnInit(): void {
     this.listaService.buscarSugestoes().subscribe({
-      next: (data: any[]) => this.sugestoes = data,
+      next: (data) => this.sugestoes = data,
       error: (error) => console.error('Deu ruim:', error),
     });
   }
@@ -35,6 +35,6 @@ export class ProdutoLista implements OnInit {
       );
       this.formItem.reset({ nome: '', quantidade: 1 });
     }
-
   }
+
 }
