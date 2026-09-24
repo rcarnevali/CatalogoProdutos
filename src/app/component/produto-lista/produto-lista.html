@@ -22,12 +22,24 @@
   <button type="submit" [disabled]="!formItem.valid">Adicionar</button>
 </form>
 
-<h2 class="titulo-secao">Sugestões</h2>
-<div class="grade-produtos">
+<div class="secao-produtos-header">
+  <h2 class="titulo-secao">{{ categoriaNomeExibicao }}</h2>
+  <span class="contador-itens" *ngIf="!carregandoProdutos">({{ sugestoes.length }} produtos)</span>
+</div>
+
+<div *ngIf="carregandoProdutos" class="status-carregamento">
+  <p>Carregando produtos...</p>
+</div>
+
+<div class="grade-produtos" *ngIf="!carregandoProdutos && sugestoes.length > 0">
   <div class="produtos" *ngFor="let produto of sugestoes">
     <img [src]="produto.image" [alt]="produto.title" width="100">
     <p class="produto-titulo">{{produto.title}}</p>
     <p class="produto-preco">R$ {{produto.price}}</p>
     <a [routerLink]="['/produto', produto.id]">Ver detalhes</a>
   </div>
+</div>
+
+<div *ngIf="!carregandoProdutos && sugestoes.length === 0" class="status-vazio">
+  <p>Nenhum produto encontrado nesta categoria.</p>
 </div>

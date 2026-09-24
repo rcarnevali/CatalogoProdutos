@@ -1,3 +1,9 @@
+.conteudo-principal {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem 1rem;
+}
+
 .container {
   max-width: 720px;
   margin: 0 auto;

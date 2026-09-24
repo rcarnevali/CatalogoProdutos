@@ -28,7 +28,7 @@ export class ProdutoService {
   }
 
   buscarSugestoes() {
-    return this.http.get<any[]>('https://fakestoreapi.com/products');
+    return this.http.get<any[]>(`https://fakestoreapi.com/products`);
   }
 
   buscarProdutoPorId(id: number) {
@@ -37,4 +37,14 @@ export class ProdutoService {
     );
   }
 
-}
+  buscarCategorias() {
+    return this.http.get<string[]>(`https://fakestoreapi.com/products/categories`);
+  }
+
+  buscarProdutosPorCategoria(categoria: string) {
+    return this.http.get<any[]>(
+      `https://fakestoreapi.com/products/category/${encodeURIComponent(categoria)}`
+    );
+  }
+
+}

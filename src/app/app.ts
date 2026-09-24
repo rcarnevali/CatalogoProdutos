@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ProdutoLista } from './component/produto-lista/produto-lista';
+import { Menu } from './component/menu/menu';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ProdutoLista],
+  imports: [RouterOutlet, Menu],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   title = 'catalogo-produtos';
-}
+}

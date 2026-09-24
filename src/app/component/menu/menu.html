@@ -1,0 +1,50 @@
+<header class="menu-header">
+  <div class="menu-container">
+    <div class="brand">
+      <a routerLink="/" class="brand-link">
+        <span class="brand-icone">🛍️</span>
+        <span class="brand-texto">Catálogo de Produtos</span>
+      </a>
+    </div>
+
+    <nav class="nav-categorias" aria-label="Navegação por categorias">
+      <ul class="lista-categorias">
+        <!-- Opção para ver todos os produtos -->
+        <li class="item-categoria">
+          <a
+            routerLink="/"
+            routerLinkActive="ativo"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="categoria-link"
+          >
+            <span class="categoria-icone">📦</span>
+            <span class="categoria-nome">Todos os Produtos</span>
+          </a>
+        </li>
+
+        <!-- Categorias dinâmicas da API -->
+        <li class="item-categoria" *ngFor="let cat of categorias">
+          <a
+            [routerLink]="['/categoria', cat]"
+            routerLinkActive="ativo"
+            class="categoria-link"
+          >
+            <span class="categoria-icone">{{ obterIcone(cat) }}</span>
+            <span class="categoria-nome">{{ obterNomeExibicao(cat) }}</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Estado de carregamento -->
+      <div *ngIf="carregando" class="status-mensagem">
+        <span>Carregando categorias...</span>
+      </div>
+
+      <!-- Estado de erro -->
+      <div *ngIf="erro" class="status-erro">
+        <span>{{ erro }}</span>
+        <button (click)="carregarCategorias()" class="btn-tentar-novamente">Tentar novamente</button>
+      </div>
+    </nav>
+  </div>
+</header>
