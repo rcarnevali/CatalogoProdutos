@@ -23,9 +23,33 @@
   cursor: pointer;
 }
 
-.titulo-secao {
+.secao-produtos-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
   margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.titulo-secao {
+  margin: 0;
   color: #6b2d8c;
+}
+
+.contador-itens {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.status-carregamento,
+.status-vazio {
+  text-align: center;
+  padding: 32px;
+  color: #6b7280;
+  font-style: italic;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
 }
 
 .grade-produtos {

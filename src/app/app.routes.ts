@@ -3,6 +3,7 @@ import { ProdutoLista } from './component/produto-lista/produto-lista';
 import { ProdutoDetalhe } from './component/produto-detalhe/produto-detalhe';
 
 export const routes: Routes = [
-  { path: '', component: ProdutoLista },
+  { path: '', component: ProdutoLista },  
   { path: 'produto/:id', component: ProdutoDetalhe },
+  { path: 'categoria/:categoria', component: ProdutoLista },
 ];
