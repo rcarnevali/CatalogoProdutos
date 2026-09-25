@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-produto-lista',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './produto-lista.html',
   styleUrl: './produto-lista.css'
 })
 export class ProdutoLista implements OnInit {
   constructor(
     public listaService: ProdutoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
 
   sugestoes: any[] = [];
@@ -27,11 +27,6 @@ export class ProdutoLista implements OnInit {
     "men's clothing": 'Moda Masculina',
     "women's clothing": 'Moda Feminina'
   };
-
-  formItem = new FormGroup({
-    nome: new FormControl('', Validators.required),
-    quantidade: new FormControl(1, [Validators.required, Validators.min(1)]),
-  });
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -48,13 +43,16 @@ export class ProdutoLista implements OnInit {
     if (categoria) {
       this.categoriaNomeExibicao = `Categoria: ${this.nomesCategorias[categoria] || categoria}`;
       this.listaService.buscarProdutosPorCategoria(categoria).subscribe({
-        next: (data) => {
-          this.sugestoes = data;
-          this.carregandoProdutos = false;
-        },
+
+      next: (data) => {
+        this.sugestoes = data;
+        this.carregandoProdutos = false;
+        this.cdr.markForCheck();
+      },
         error: (error) => {
           console.error('Erro ao buscar produtos da categoria:', error);
           this.carregandoProdutos = false;
+          this.cdr.markForCheck();
         }
       });
     } else {
@@ -63,23 +61,14 @@ export class ProdutoLista implements OnInit {
         next: (data) => {
           this.sugestoes = data;
           this.carregandoProdutos = false;
+          this.cdr.markForCheck();
         },
         error: (error) => {
           console.error('Deu ruim:', error);
           this.carregandoProdutos = false;
+          this.cdr.markForCheck();
         }
       });
     }
   }
-
-  enviar(){
-    if (this.formItem.valid) {
-      this.listaService.adicionarItem(
-        this.formItem.value.nome!,
-        this.formItem.value.quantidade!
-      );
-      this.formItem.reset({ nome: '', quantidade: 1 });
-    }
-  }
-
-}
+}
