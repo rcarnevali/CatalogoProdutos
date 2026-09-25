@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProdutoService } from '../../services/produto';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-produto-lista',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './produto-lista.html',
   styleUrl: './produto-lista.css'
 })
@@ -27,11 +26,6 @@ export class ProdutoLista implements OnInit {
     "men's clothing": 'Moda Masculina',
     "women's clothing": 'Moda Feminina'
   };
-
-  formItem = new FormGroup({
-    nome: new FormControl('', Validators.required),
-    quantidade: new FormControl(1, [Validators.required, Validators.min(1)]),
-  });
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -71,15 +65,4 @@ export class ProdutoLista implements OnInit {
       });
     }
   }
-
-  enviar(){
-    if (this.formItem.valid) {
-      this.listaService.adicionarItem(
-        this.formItem.value.nome!,
-        this.formItem.value.quantidade!
-      );
-      this.formItem.reset({ nome: '', quantidade: 1 });
-    }
-  }
-
-}
+}
