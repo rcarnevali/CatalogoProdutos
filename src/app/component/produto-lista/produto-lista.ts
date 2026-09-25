@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 
@@ -12,7 +12,8 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 export class ProdutoLista implements OnInit {
   constructor(
     public listaService: ProdutoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
 
   sugestoes: any[] = [];
@@ -42,13 +43,16 @@ export class ProdutoLista implements OnInit {
     if (categoria) {
       this.categoriaNomeExibicao = `Categoria: ${this.nomesCategorias[categoria] || categoria}`;
       this.listaService.buscarProdutosPorCategoria(categoria).subscribe({
-        next: (data) => {
-          this.sugestoes = data;
-          this.carregandoProdutos = false;
-        },
+
+      next: (data) => {
+        this.sugestoes = data;
+        this.carregandoProdutos = false;
+        this.cdr.markForCheck();
+      },
         error: (error) => {
           console.error('Erro ao buscar produtos da categoria:', error);
           this.carregandoProdutos = false;
+          this.cdr.markForCheck();
         }
       });
     } else {
@@ -57,10 +61,12 @@ export class ProdutoLista implements OnInit {
         next: (data) => {
           this.sugestoes = data;
           this.carregandoProdutos = false;
+          this.cdr.markForCheck();
         },
         error: (error) => {
           console.error('Deu ruim:', error);
           this.carregandoProdutos = false;
+          this.cdr.markForCheck();
         }
       });
     }
