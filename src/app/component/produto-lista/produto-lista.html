@@ -9,6 +9,16 @@
 
 <div class="grade-produtos" *ngIf="!carregandoProdutos && sugestoes.length > 0">
   <div class="produtos" *ngFor="let produto of sugestoes">
+    <button
+      type="button"
+      class="botao-interesse"
+      [class.interessado]="listaService.temInteresse(produto.id)"
+      (click)="listaService.alternarInteresse(produto.id)"
+      [attr.aria-label]="listaService.temInteresse(produto.id) ? 'Remover interesse' : 'Tenho interesse'"
+      [title]="listaService.temInteresse(produto.id) ? 'Remover interesse' : 'Tenho interesse'"
+    >
+      ❤
+    </button>
     <img [src]="produto.image" [alt]="produto.title" width="100">
     <p class="produto-titulo">{{ produto.title }}</p>
     <p class="produto-preco">R$ {{ produto.price }}</p>
