@@ -56,7 +56,7 @@ export class ProdutoLista implements OnInit {
         }
       });
     } else {
-      this.categoriaNomeExibicao = 'Todas as Sugestões';
+      this.categoriaNomeExibicao = 'Todos os produtos';
       this.listaService.buscarSugestoes().subscribe({
         next: (data) => {
           this.sugestoes = data;
