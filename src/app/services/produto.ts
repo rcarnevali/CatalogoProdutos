@@ -25,4 +25,20 @@ export class ProdutoService {
       `https://fakestoreapi.com/products/category/${encodeURIComponent(categoria)}`
     );
   }
+
+  interesses: number[] = [];
+
+  temInteresse(id: number) {
+    return this.interesses.includes(id);
+  }
+
+  alternarInteresse(id: number) {
+    if (this.temInteresse(id)) {
+      this.interesses = this.interesses.filter(
+        produtoId => produtoId !== id
+      );
+    } else {
+      this.interesses.push(id);
+    }
+  }
 }
