@@ -22,17 +22,68 @@
     <img [src]="produto.image" [alt]="produto.title" width="100">
     <p class="produto-titulo">{{ produto.title }}</p>
     <p class="produto-preco">R$ {{ produto.price }}</p>
-    <a
+    <button
       *ngIf="listaService.temInteresse(produto.id)"
-      href="#"
-      class="link-observacao"
-      (click)="$event.preventDefault()"
+      type="button"
+      class="botao-observacao"
+      (click)="abrirObservacao(produto.id)"
     >
-      Adicionar observação
-    </a>
+      {{ listaService.temObservacao(produto.id)
+          ? 'Ver observação'
+          : 'Adicionar observação' }}
+    </button>
   </div>
 </div>
 
 <div *ngIf="!carregandoProdutos && sugestoes.length === 0" class="status-vazio">
   <p>Nenhum produto encontrado nesta categoria.</p>
+</div>
+
+<div
+  class="modal-fundo"
+  *ngIf="modalObservacaoAberto"
+  (click)="fecharObservacao()"
+>
+
+  <div
+    class="modal-observacao"
+    (click)="$event.stopPropagation()"
+  >
+
+    <h3>
+      {{ listaService.temObservacao(produtoSelecionadoId!)
+          ? 'Editar observação'
+          : 'Adicionar observação' }}
+    </h3>
+
+    <textarea
+      [(ngModel)]="observacaoTexto"
+      placeholder="Digite uma observação para este produto..."
+      rows="5"
+      maxlength="300"
+    ></textarea>
+
+    <div class="modal-acoes">
+
+      <button
+        type="button"
+        class="botao-cancelar"
+        (click)="fecharObservacao()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        class="botao-salvar"
+        [disabled]="!observacaoTexto.trim()"
+        (click)="salvarObservacao()"
+      >
+        Salvar
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
