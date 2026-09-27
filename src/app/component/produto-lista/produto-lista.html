@@ -22,16 +22,14 @@
     <img [src]="produto.image" [alt]="produto.title" width="100">
     <p class="produto-titulo">{{ produto.title }}</p>
     <p class="produto-preco">R$ {{ produto.price }}</p>
-    <button
+    <a
       *ngIf="listaService.temInteresse(produto.id)"
-      type="button"
-      class="botao-observacao"
-      (click)="abrirObservacao(produto.id)"
+      href="#"
+      class="link-observacao"
+      (click)="$event.preventDefault()"
     >
-      {{ listaService.temObservacao(produto.id)
-          ? 'Ver observação'
-          : 'Adicionar observação' }}
-    </button>
+      Adicionar observação
+    </a>
   </div>
 </div>
 

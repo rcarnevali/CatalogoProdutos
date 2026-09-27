@@ -28,8 +28,6 @@ export class ProdutoService {
 
   interesses: number[] = [];
 
-  observacoes: Record<number, string> = {};
-
   temInteresse(id: number) {
     return this.interesses.includes(id);
   }
@@ -39,23 +37,8 @@ export class ProdutoService {
       this.interesses = this.interesses.filter(
         produtoId => produtoId !== id
       );
-
-      delete this.observacoes[id];
-
     } else {
       this.interesses.push(id);
     }
-  }
-
-    adicionarObservacao(id: number, observacao: string) {
-    this.observacoes[id] = observacao;
-  }
-
-  obterObservacao(id: number): string {
-    return this.observacoes[id] || '';
-  }
-
-  temObservacao(id: number): boolean {
-    return !!this.observacoes[id];
   }
 }
