@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
 import { RouterLink, ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-produto-lista',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './produto-lista.html',
   styleUrl: './produto-lista.css'
 })
@@ -20,6 +21,9 @@ export class ProdutoLista implements OnInit {
   categoriaAtual: string | null = null;
   categoriaNomeExibicao: string = 'Sugestões de Produtos';
   carregandoProdutos: boolean = false;
+  modalObservacaoAberto: boolean = false;
+  produtoSelecionadoId: number | null = null;
+  observacaoTexto: string = '';
 
   nomesCategorias: Record<string, string> = {
     'electronics': 'Eletrônicos',
@@ -56,7 +60,7 @@ export class ProdutoLista implements OnInit {
         }
       });
     } else {
-      this.categoriaNomeExibicao = 'Todas as Sugestões';
+      this.categoriaNomeExibicao = 'Todos os produtos';
       this.listaService.buscarSugestoes().subscribe({
         next: (data) => {
           this.sugestoes = data;
@@ -70,5 +74,37 @@ export class ProdutoLista implements OnInit {
         }
       });
     }
+  }
+  abrirObservacao(id: number): void {
+  this.produtoSelecionadoId = id;
+
+  this.observacaoTexto = this.listaService.obterObservacao(id);
+
+  this.modalObservacaoAberto = true;
+  }
+
+  fecharObservacao(): void {
+  this.modalObservacaoAberto = false;
+  this.produtoSelecionadoId = null;
+  this.observacaoTexto = '';
+  }
+
+  salvarObservacao(): void {
+  if (this.produtoSelecionadoId === null) {
+    return;
+  }
+
+  const observacao = this.observacaoTexto.trim();
+
+  if (!observacao) {
+    return;
+  }
+
+  this.listaService.adicionarObservacao(
+    this.produtoSelecionadoId,
+    observacao
+  );
+
+  this.fecharObservacao();
   }
 }

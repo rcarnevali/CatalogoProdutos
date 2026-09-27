@@ -9,13 +9,81 @@
 
 <div class="grade-produtos" *ngIf="!carregandoProdutos && sugestoes.length > 0">
   <div class="produtos" *ngFor="let produto of sugestoes">
+    <button
+      type="button"
+      class="botao-interesse"
+      [class.interessado]="listaService.temInteresse(produto.id)"
+      (click)="listaService.alternarInteresse(produto.id)"
+      [attr.aria-label]="listaService.temInteresse(produto.id) ? 'Remover interesse' : 'Tenho interesse'"
+      [title]="listaService.temInteresse(produto.id) ? 'Remover interesse' : 'Tenho interesse'"
+    >
+      ❤
+    </button>
     <img [src]="produto.image" [alt]="produto.title" width="100">
     <p class="produto-titulo">{{ produto.title }}</p>
     <p class="produto-preco">R$ {{ produto.price }}</p>
-    <a [routerLink]="['/produto', produto.id]">Ver detalhes</a>
+    <button
+      *ngIf="listaService.temInteresse(produto.id)"
+      type="button"
+      class="botao-observacao"
+      (click)="abrirObservacao(produto.id)"
+    >
+      {{ listaService.temObservacao(produto.id)
+          ? 'Ver observação'
+          : 'Adicionar observação' }}
+    </button>
   </div>
 </div>
 
 <div *ngIf="!carregandoProdutos && sugestoes.length === 0" class="status-vazio">
   <p>Nenhum produto encontrado nesta categoria.</p>
+</div>
+
+<div
+  class="modal-fundo"
+  *ngIf="modalObservacaoAberto"
+  (click)="fecharObservacao()"
+>
+
+  <div
+    class="modal-observacao"
+    (click)="$event.stopPropagation()"
+  >
+
+    <h3>
+      {{ listaService.temObservacao(produtoSelecionadoId!)
+          ? 'Editar observação'
+          : 'Adicionar observação' }}
+    </h3>
+
+    <textarea
+      [(ngModel)]="observacaoTexto"
+      placeholder="Digite uma observação para este produto..."
+      rows="5"
+      maxlength="300"
+    ></textarea>
+
+    <div class="modal-acoes">
+
+      <button
+        type="button"
+        class="botao-cancelar"
+        (click)="fecharObservacao()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        class="botao-salvar"
+        [disabled]="!observacaoTexto.trim()"
+        (click)="salvarObservacao()"
+      >
+        Salvar
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
